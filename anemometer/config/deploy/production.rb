@@ -64,6 +64,7 @@ lock '3.6.1'
 
 set :application, 'anemometer'
 set :repo_url, 'git@github.com:airavata-courses/TeamCodeRing.git' # Edit this to match your repository
+set :repo_tree, '/anemometer'
 set :branch, :master
 set :deploy_to, '/home/deploy/anemometer'
 set :pty, true
