@@ -90,3 +90,4 @@ set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
 server 'ubuntu@ec2-52-32-57-118.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{web app db}
+config.assets.compile = true
