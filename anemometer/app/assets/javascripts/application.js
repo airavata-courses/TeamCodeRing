@@ -12,6 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+//= require moment
+//= require bootstrap-datetimepicker
+
+
+
+$(function () {
+  $('.datetimepicker').datetimepicker({
+    widgetPositioning: {
+      horizontal: 'left',
+      vertical: 'bottom'
+    }
+  });
+});
