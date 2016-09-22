@@ -1,0 +1,1 @@
+$redis = Redis.new(:host => 'redis-18060.c8.us-east-1-2.ec2.cloud.redislabs.com', :port => 18060)
