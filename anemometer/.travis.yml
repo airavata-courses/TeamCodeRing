@@ -1,0 +1,34 @@
+language: ruby
+
+rvm:
+  - 2.2.4
+  - 2.2.3
+  - jruby
+  - rbx-2
+
+cache: bundler
+
+services:
+  - redis
+  - mysql
+
+gemfile:
+  - Gemfile
+
+before_install:
+  - gem update --system
+  - gem --version
+  - gem install bundler
+  - gem install capistrano --no-ri --no-rdoc
+
+before_script:
+  - bundle install
+  - mysql -e 'create database IF NOT EXISTS weather_machine;'
+  - bundle exec rake db:migrate
+
+script:
+  - cap production deploy
+
+branches:
+  only:
+    - master
