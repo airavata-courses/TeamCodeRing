@@ -8,6 +8,9 @@ rvm:
 
 cache: bundler
 
+env:
+  - DB=mysql
+
 services:
   - redis
   - mysql
@@ -25,7 +28,7 @@ before_install:
 before_script:
   - bundle install
   - mysql -e 'create database IF NOT EXISTS weather_machine;'
-  - bundle exec rake db:migrate
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
 
 script:
   - cap production deploy
