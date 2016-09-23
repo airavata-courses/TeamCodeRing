@@ -20,6 +20,7 @@ before_install:
   - gem --version
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
+  - cd anemometer
 
 before_script:
   - bundle install
