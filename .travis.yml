@@ -23,6 +23,8 @@ before_install:
   - gem --version
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
+  - gem uninstall sqlite3
+  - cd TeamCodeRing
   - cd anemometer
 
 before_script:
