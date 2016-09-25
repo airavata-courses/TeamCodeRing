@@ -1,5 +1,6 @@
   <h2> Select Station </h2>
-  <form action="#">
+  <%= form_tag(data_source_path, method: "post") do %>
+<!--   <form action="/" method="post"> -->
     <div class="form-group row">
       <label class="col-xs-2" for="station">NEXRAD STATION</label>
       <div class="col-xs-10">
@@ -12,8 +13,9 @@
         <%= text_field :start, :date, class: 'datetimepicker' %>
       </div>
     </div>
-    <input type="submit" value="Submit">
-  </form>
+    <%= submit_tag("Submit") %>
+    <!-- <input type="submit" value="Submit"> -->
+  <% end %>
 </div>
 
 

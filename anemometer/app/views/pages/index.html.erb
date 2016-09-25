@@ -1,8 +1,15 @@
+
+
 <% if current_user %>
-  <div class="page-header"><h1>Welcome back!</h1></div>
+  <div class="page-header">
+    <h1>Welcome back!</h1> <br>
+  </div>
+  
+
   <div class="well well-lg">
     <%= render partial: "dataingestor"  %>
   </div>
+
 <% else %>
   <div class="jumbotron">
     <div class="container">
