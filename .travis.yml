@@ -4,6 +4,7 @@ rvm:
 cache: bundler
 sudo: required
 env:
+  - DEPLOY_KEY=codering
   matrix:
   - DB=mysql
   global:
