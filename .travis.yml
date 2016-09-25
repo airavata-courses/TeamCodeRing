@@ -2,9 +2,6 @@ language: ruby
 
 rvm:
   - 2.2.4
-  - 2.2.3
-  - jruby
-  - rbx-2
 
 cache: bundler
 
