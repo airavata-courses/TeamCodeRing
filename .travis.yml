@@ -23,7 +23,8 @@ before_install:
   - cd anemometer
 
 before_script:
-  - bundle install
+  - RAILS_ENV=test bundle install
+  - gem list
   - gem uninstall sqlite3
   - mysql -e 'create database IF NOT EXISTS weather_machine;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
