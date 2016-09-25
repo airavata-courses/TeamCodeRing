@@ -23,11 +23,11 @@ before_install:
   - gem --version
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
-  - gem uninstall sqlite3
   - cd anemometer
 
 before_script:
   - bundle install
+  - gem uninstall sqlite3
   - mysql -e 'create database IF NOT EXISTS weather_machine;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
 
