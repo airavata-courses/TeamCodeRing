@@ -1,37 +1,32 @@
 language: ruby
-
 rvm:
   - 2.2.4
-
 cache: bundler
-
 env:
+  matrix:
   - DB=mysql
-
+  global:
+    secure: A3EJ1VWc3W5/sAyJFWr9JuawL7pbs4dSXN79CQwT4h62GcXx9T2GMW6tsznSYaPLNZwsJM3g5wTfsZafNzMdrjg2sfTwu3qETvBc+2X5PGw1Ty3TqpmdcCSIOhj1zo7U4JDePIONciAev3gLrO8KN+/GolQyUr4tGtA4zn3rsEeuWd9T8bjt4fP3UgI3bzK25w5na6vK0JgZPlUS7keMMy0x1jyRv+8dM9L1HUnHo0FyifKU1S8dWIumbKthn4Kmm1T/vqkDpdGgLrSHDG6N5MbW0sZeszSeOrDDI2QED1J7MsOKpYy3xGJIDq4vh9sd74Z08pvhwKZCIISH7fLpPtWLlbzY5SkQnW/kTCwyzdATSTzCUsAcEwEetGQC0NpqKepEp5EdtiW0drCFNZlsL87EAFyeyh1tEwz+8BbI8YLecPsv1AAyie6v0DexUl6VOApFEyhEmtgBG9wQMJfycdrESuwyQrPPX66zYfu7J2RRReG+0eZMp7of6tW+FCiviofZWm01cSUG5iHsuXXe6JjBz57XXJA+A/+JKnP8lLdUE9RuFIc+pR3V697qmmRzRTPxxgeXGGIPuKuzmfuZ7TvoPkAeWoPGARxvi6GUxphP7JrdYFnWxecNActLwziMtK7EwxJTQxfbMRx72nNuHJczh7FA/Wb5ElKlCT7Dbq8=
 services:
   - redis
   - mysql
-
 gemfile:
-  - Gemfile
-
+ - Gemfile
 before_install:
   - gem update --system
   - gem --version
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
   - cd anemometer
-
 before_script:
   - RAILS_ENV=test bundle install --system
   - gem list
   - gem uninstall sqlite3
   - mysql -e 'create database IF NOT EXISTS weather_machine_test;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-
 script:
+  - "openssl aes-256-cbc -k $DEPLOY_KEY -in config/deploy_id_rsa_ane_travis -d -a -out config/deploy_id_rsa"
   - cap production deploy
-
 branches:
   only:
-    - master
+  - master
