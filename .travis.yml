@@ -17,14 +17,17 @@ before_install:
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
   - cd anemometer
+  - openssl aes-256-cbc -K $encrypted_2bf021a2570e_key -iv $encrypted_2bf021a2570e_iv
+  - in id_rsa.enc -out ~\/.ssh/id_rsa -d
 before_script:
   - RAILS_ENV=test bundle install --system
   - gem list
   - gem uninstall sqlite3
   - mysql -e 'create database IF NOT EXISTS weather_machine_test;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - cat ~/.ssh/id_rsa.pub
 script:
+  - chmod 600 deploy-key
+  - mv deploy-key ~/.ssh/id_rsa
   - bundle exec cap production deploy
 branches:
   only:
