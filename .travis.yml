@@ -26,7 +26,7 @@ before_script:
   - mysql -e 'create database IF NOT EXISTS weather_machine_test;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
 script:
-  - cap production deploy
+  - bundle exec cap production deploy
 branches:
   only:
   - master
