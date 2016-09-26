@@ -67,7 +67,3 @@ su deploy
 4.	../spark/bin/spark-submit --class src.main.scala.com.cloudera.sparkwordcount.SparkWordCount --master local target/sparkwordcount-0.0.1-SNAPSHOT.jar inputfile.txt 2
 This is simple word count example to test whether we are able to read/write from local/hdfs and write to local/hdfs.
 Please note that below are one time activity, we don’t need to launch the cluster every time, just use login to existing cluster.
-
- 
-	
->>>>>>> 2bb035fbcb4d8e250fe74628d4f5037d730fcbd3
