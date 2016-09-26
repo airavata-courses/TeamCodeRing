@@ -73,6 +73,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 set :keep_releases, 5
 set :rvm_type, :user
 set :bundle_flags, "--deployment"
+set :ssh_options, keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")
 set :rvm_ruby_version, '2.2.4' # Edit this if you are using MRI Ruby
 
 set :puma_rackup, -> { File.join(current_path, 'config.ru') }
