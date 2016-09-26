@@ -5,8 +5,6 @@ class PagesController < ApplicationController
   end
 
   def form_url
-    params[:stations]
-    params[:start][:date]
     uri = URI(RAIN_GAUGE[Rails.env])
     uri.query = URI.encode_www_form(:stations => params[:stations], :date => params[:start][:date])
     res = Net::HTTP.get_response(uri)
