@@ -6,8 +6,6 @@ sudo: required
 env:
   matrix:
   - DB=mysql
-  global:
-    secure: A3EJ1VWc3W5/sAyJFWr9JuawL7pbs4dSXN79CQwT4h62GcXx9T2GMW6tsznSYaPLNZwsJM3g5wTfsZafNzMdrjg2sfTwu3qETvBc+2X5PGw1Ty3TqpmdcCSIOhj1zo7U4JDePIONciAev3gLrO8KN+/GolQyUr4tGtA4zn3rsEeuWd9T8bjt4fP3UgI3bzK25w5na6vK0JgZPlUS7keMMy0x1jyRv+8dM9L1HUnHo0FyifKU1S8dWIumbKthn4Kmm1T/vqkDpdGgLrSHDG6N5MbW0sZeszSeOrDDI2QED1J7MsOKpYy3xGJIDq4vh9sd74Z08pvhwKZCIISH7fLpPtWLlbzY5SkQnW/kTCwyzdATSTzCUsAcEwEetGQC0NpqKepEp5EdtiW0drCFNZlsL87EAFyeyh1tEwz+8BbI8YLecPsv1AAyie6v0DexUl6VOApFEyhEmtgBG9wQMJfycdrESuwyQrPPX66zYfu7J2RRReG+0eZMp7of6tW+FCiviofZWm01cSUG5iHsuXXe6JjBz57XXJA+A/+JKnP8lLdUE9RuFIc+pR3V697qmmRzRTPxxgeXGGIPuKuzmfuZ7TvoPkAeWoPGARxvi6GUxphP7JrdYFnWxecNActLwziMtK7EwxJTQxfbMRx72nNuHJczh7FA/Wb5ElKlCT7Dbq8=
 services:
   - redis
   - mysql
@@ -25,6 +23,7 @@ before_script:
   - gem uninstall sqlite3
   - mysql -e 'create database IF NOT EXISTS weather_machine_test;'
   - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - cat ~/.ssh/id_rsa.pub
 script:
   - bundle exec cap production deploy
 branches:
