@@ -5,15 +5,15 @@ class PagesController < ApplicationController
   end
 
   def form_url
-    params[:stations]
-    params[:start][:date]
-    uri = URI('http://127.0.0.1:5000/')
-    params = { :limit => 10, :page => 3 }
-    uri.query = URI.encode_www_form(params)
+    uri = URI(RAIN_GAUGE[Rails.env])
+    uri.query = URI.encode_www_form(:stations => params[:stations], :date => params[:start][:date])
     res = Net::HTTP.get_response(uri)
-    puts res.body if res.is_a?(Net::HTTPSuccess)
-    redirect_to root_path, notice: "Redirected to flask app"
-
+    if res.is_a?(Net::HTTPSuccess)
+      flash[:success] = "Data ingested, The data URL is : #{res.body}"
+    else
+      flash[:failure] = "Unable to get a Data URL"
+    end
+    redirect_to root_path
   end
 
   def test
