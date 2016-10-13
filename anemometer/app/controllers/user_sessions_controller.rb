@@ -15,8 +15,14 @@ class UserSessionsController < ApplicationController
 
   def oauth_login
     user = User.from_omniauth(env["omniauth.auth"])
-    session[:user_id] = user.id
-    redirect_to test
+    @user_session = UserSession.new(user)
+    if @user_session.save
+      flash[:success] = "Welcome back!"
+      redirect_to root_path
+    else
+      flash[:error] = "Cannot login!!"
+      render :new
+    end
   end
 
 
