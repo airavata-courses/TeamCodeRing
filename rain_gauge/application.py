@@ -3,4 +3,4 @@ app = Flask(__name__)
 
 @app.route('/')
 def data_ingest():
-    return 'Data Injestor Invoked!!!'
+  return 'Data Injestor Invoked!!!'

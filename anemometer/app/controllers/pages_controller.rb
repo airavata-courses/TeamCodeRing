@@ -16,4 +16,8 @@ class PagesController < ApplicationController
 
   end
 
+  def test
+    redirect_to :test
+  end
+
 end

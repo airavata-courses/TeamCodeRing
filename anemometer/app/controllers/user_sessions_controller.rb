@@ -13,6 +13,14 @@ class UserSessionsController < ApplicationController
     end
   end
 
+  def oauth_login
+    user = User.from_omniauth(env["omniauth.auth"])
+    session[:user_id] = user.id
+    redirect_to test
+  end
+
+
+
   def destroy
     current_user_session.destroy
     flash[:success] = "Goodbye!"
