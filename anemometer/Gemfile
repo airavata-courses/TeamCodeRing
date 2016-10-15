@@ -45,6 +45,8 @@ gem "omniauth-google-oauth2", "~> 0.2.1"
 
 gem 'authlogic', '3.4.6'
 
+gem 'redis', '2.1.1'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-datetimepicker'
 end
