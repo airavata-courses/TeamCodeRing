@@ -14,6 +14,7 @@ conn = redis.StrictRedis(redis_url)
 
 @app.route('/')
 def data_ingest():
+
     station = request.args.get('stations')
     time = request.args.get('date')
     redis_key = request.args.get('redis_key')

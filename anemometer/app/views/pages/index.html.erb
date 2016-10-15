@@ -1,25 +1,7 @@
+<div class="page-header">
+  <h1>Welcome back!</h1> <br>
+</div>
 
-
-<% if current_user %>
-  <div class="page-header">
-    <h1>Welcome back!</h1> <br>
-  </div>
-  
-
-  <div class="well well-lg">
-    <%= render partial: "dataingestor"  %>
-  </div>
-
-<% else %>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Welcome!</h1>
-      <p>Sign up to get started.</p>
-      <p>
-        <%= link_to new_user_path, class: 'btn btn-primary btn-lg' do %>
-          Sign Up &raquo;
-        <% end %>
-      </p>
-    </div>
-  </div>
- <% end %>
+<div class="well well-lg">
+  <%= render partial: "dataingestor"  %>
+</div>

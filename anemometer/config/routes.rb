@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'sessions/create'
+
+  get 'sessions/destroy'
+
+  get 'home/show'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -53,6 +59,10 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+
+  get 'auth/:provider/callback', to: 'user_sessions#oauth_login'
+  get 'auth/failure', to: redirect('/')
  
   resources :users, only: [:new, :create]
 

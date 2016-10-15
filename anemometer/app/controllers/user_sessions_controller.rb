@@ -13,6 +13,20 @@ class UserSessionsController < ApplicationController
     end
   end
 
+  def oauth_login
+    user = User.from_omniauth(env["omniauth.auth"])
+    @user_session = UserSession.new(user)
+    if @user_session.save
+      flash[:success] = "Welcome back!"
+      redirect_to root_path
+    else
+      flash[:error] = "Cannot login!!"
+      render :new
+    end
+  end
+
+
+
   def destroy
     current_user_session.destroy
     flash[:success] = "Goodbye!"
