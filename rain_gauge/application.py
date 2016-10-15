@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def data_ingest():
+
     station = request.args.get('stations')
     time = request.args.get('date')
     weather_date = datetime.strptime(time, '%m/%d/%Y %I:%M %p')
