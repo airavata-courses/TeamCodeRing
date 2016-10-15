@@ -10,11 +10,11 @@ class PagesController < ApplicationController
   end
 
   def form_url
-    val = "request:"+current_user.id.to_s+":"+Time.new.utc.to_s
+    @current_request_key = "request:"+current_user.id.to_s+":"+Time.new.utc.to_s
     add_redis_keys
-    res = call_data_ingestor
-    if res.is_a?(Net::HTTPSuccess)
-      flash[:success] = "Data ingested, The data URL is : #{res.body}"
+    @data_results = call_data_ingestor
+    if @data_results.is_a?(Net::HTTPSuccess)
+      flash[:success] = "Data ingested successfully!!"
     else
       flash[:failure] = "Unable to get a Data URL"
       redirect_to root_path
@@ -32,15 +32,15 @@ class PagesController < ApplicationController
   end
 
   def add_redis_keys
-    $redis.sadd("weather_machine",val)
-    $redis.sadd(val, params[:stations])
-    $redis.sadd(val, params[:start][:date])
-    $redis.sadd(val, "Sent to Data Ingestor")
+    $redis.sadd("weather_machine",@current_request_key)
+    $redis.sadd(@current_request_key, params[:stations])
+    $redis.sadd(@current_request_key, params[:start][:date])
+    $redis.sadd(@current_request_key, "Sent to Data Ingestor")
   end
 
   def call_data_ingestor
     uri = URI(RAIN_GAUGE[Rails.env])
-    uri.query = URI.encode_www_form(:stations => params[:stations], :date => params[:start][:date], :redis_key => val)
+    uri.query = URI.encode_www_form(:stations => params[:stations], :date => params[:start][:date], :redis_key => @current_request_key)
     Net::HTTP.get_response(uri)
   end
 
