@@ -1,7 +1,7 @@
 var express = require('express');
 var redis = require('redis');
 var router = express.Router();
-var client = redis.createClient(6379,"127.0.0.1");
+var client = redis.createClient(6379, "redis");
 
 var app = express();
 

@@ -9,7 +9,7 @@ default: &default
   database: weather_machine
   username: root
   password: password
-  host: localhost
+  host: db
   pool: 5
   timeout: 5000
 

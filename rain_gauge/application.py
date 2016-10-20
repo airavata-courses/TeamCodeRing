@@ -27,3 +27,6 @@ def data_ingest():
     urls = ["http://noaa-nexrad-level2.s3.amazonaws.com/"+key.name for key in s3_bucket.get_all_keys(prefix=timestamp)]
     conn.sadd(redis_key, "Data URLs Generated, JSON prepared to send Gateway")
     return json.dumps(urls)
+
+if __name__ == "__main__":
+    app.run()
