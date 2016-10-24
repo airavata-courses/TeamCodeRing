@@ -32,6 +32,7 @@ before_install:
 before_script:
   - docker-compose up -d --build
   - cd anemometer
+  - bundle install
 script:
   - bundle exec cap production deploy
 branches:
