@@ -4,8 +4,14 @@ rvm:
 cache: bundler
 sudo: required
 env:
+  global:
+    - secure: "gWR7zlkan9RDK6TukK68hSxCQM2eApPto3sGJPXcCDML/IXrYBO+b4m/TdnottERZIHAN0+6icvbw6RRSIxKutcboCzEKSxRdOoIm4L8VUloDlKsNGla5f246J8gAQp9LsvpXjVIzbC8913oYOV70LLmba4fdL/WwYOCWtcX9vKWYbpDib4AUPAj1MRmU8sPDi6/XvACQgqFXyqecWV8olVDewiVMTKXax/k4DXGFrSOVLba2gJw1xGSmzTxETZ4YYJof7nkJYUbfUftcD0wv/KHuS+RuaQpNfAL2BALfa3wjuPBZ/vkDQBuigbskbOp/r1g+qdba3VR45X9Euv3CD6fR7ADs01LsiLSvUack73Mx0f16ROjRsCY/jB54LyrBT4ybknTHU7yPtYUVeFu5MMB7VKbaPn8suVqOp+y3Lo1GICmzWlEdMMcwG9at+eEie0V4NTfgdhjo8GbRG0C8iI+1mPTRRhDxTjs8f19ng/+IDCPnkENQOlJHbgiCjm+Oe32WLVTuyccx9LqPy5KwCa/6qQFt2GHtWucOJhiwxOqOZKtScaWts2ZehVFlgPArHRck1bvHTCxBuGbvqFu36VBU9+8s0JCBrcbTtHRC+xexENCWkBm1qBoRoM5jz2Yi/FGzEGY5eoTzeEcB8ughoJpYHFBnBi7xnV1tg+DcvU="
+    - secure: "nu9IsllSB+Z+qNFA3ylXwo0ysaoXeGQXKo+ZjkiWJNpz1XflxO+argvPPmwudYF804WPZLQK29iVCjLjn8gJ6zb3mynQmWpOfJl5vM1bTcWenxPbXQ05yHsr850HrTr33aQpg5p6XA6OCIXgEIRap+V67gOC5bolOjIqCO0i1Az3VpJ0zHqOTPECR2TEDheeYlNhVcfd8lK245hKvKZA+A3FNCA+0y/QwWacVkU1XPw4FbQNIWC0jlJDTddcDde2iZh4RXQeCz3BrhgsCVAXwW+lXI5cwdTy8sXQ3kAKP9ZUlsrzrZblltHnAbqfmhaeRx6yAJG03m0IpQA79KXZ66eB5ZjuW4Mvxy4Mzeuu4yXsZQ8v/cRi9iOiZFRZMgDMVLN4unUiQC1x4j02HGZbO0S6WMz2kwknavY+dshefZVVPPV1gWzM66n8HVVj5MBYQB1x3V7c482GJ/s5tFbCYNXgra+lSv71Wn4H8vaukx+iWgmBWBi31ftjZob1Adqqz4IdSU5wtcPpAE6Aw8O63wtHf/w4FKs1Mm+J8byPailb+3LGGBxuPT4jLsEtKrBFGt6CFUNY8DekN5tUSjn5pRjI0ZT2LPnC4SMdkBJdRUoKWianougKDb+3mLusuSv52l8zOVDqAcui+o0hfqGGoAnZKSUOYdNWdr+Q4c/Dz3E="
+    - secure: "DyckrX4ab3KPKtgTYtQGb99flxyZwhdGXrjUxDh1oxrrRiMC+oj3CBEOoNQhoU/s5Igrs2fvzuY2cvLd5ZBMJzepZRsoygmno+H5K0v3an3Ep7b3LjOvvR9Jn3NzcA9HlyNJ9+oLsrEF2947cVJWgKpj4iNvVPbDLTVO3E0HhkEmEnd0ogXUl637BnyeH685lICwe04pXtd5tQbUXW1QdvNzV9hGQXVVp/ZVEPL5pU0quc/5JtHQvmQdkiCsGf1vfVShxIVqoyvhnlqM8VJdw27iIaS6MWkMxledaLSKfDXC9e6ByvWfyDKj/zR9twuC55DODF7IqQJowdTiBzGiP7uLtrs0KGh1MhJ5L8JsJJKmFlEoe+2M9BuKahqEk/P41inahlrtGO4Mcfv4pqMQLZGnUb/vwYSGbJC03Fik5IkPNHWvVSUJm3bqr6tagy44rwwr0RM6sED87WYwxYKW/ilke1a+iROcRnXnyJo64Xu1UjGQcIoe4EUh/4CPi+hcK/xRYms2zHIfpOl5Y4/lWSANjGqDZwuJMiv/xtER7fO1vCvRNfhuX9UkrG2vYu1etUGMSzeY8vjEkkSW10I+uXk9+umuaSW7WcTwKYthal7yCejT5rTPLwY/uyIrjnF3JOc8IOaahlGc0r+B30V/qGQ9yloOG5mhDMcoh4FQGRU="
+    - COMMIT=${TRAVIS_COMMIT::8}
   matrix:
   - DB=mysql
+  - DOCKER_COMPOSE_VERSION=1.8.0
 services:
   - redis
   - mysql
@@ -16,14 +22,15 @@ before_install:
   - gem --version
   - gem install bundler
   - gem install capistrano --no-ri --no-rdoc
-  - cd anemometer
   - openssl aes-256-cbc -K $encrypted_2bf021a2570e_key -iv $encrypted_2bf021a2570e_iv -in id_rsa.enc -out config/deploy_id_rsa -d
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 before_script:
-  - RAILS_ENV=test bundle install --system
-  - gem list
-  - gem uninstall sqlite3
-  - mysql -e 'create database IF NOT EXISTS weather_machine_test;'
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - docker-compose -d up --build
+  - cd anemometer
 script:
   - bundle exec cap production deploy
 branches:

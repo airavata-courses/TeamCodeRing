@@ -21,6 +21,7 @@ services:
 
   rain_gauge:
     build: ./rain_gauge
+    image: prmurali91/teamcodering_rain_gauge
     command: uwsgi --http 0.0.0.0:5000 --module application:app --processes 1 --threads 8
     volumes:
       - '.:/rain_gauge'
@@ -33,6 +34,7 @@ services:
     depends_on:
        - db
     build: ./anemometer
+    image: prmurali91/teamcodering_anemometer
     command: bash -c "bundle exec rake db:migrate && rails server -b 0.0.0.0"
     volumes:
       - '.:/anemometer'
@@ -40,10 +42,11 @@ services:
       - db
       - redis
     ports:
-      - '3000:3000'
+      - '80:3000'
 
   satellite:
     build: ./satellite
+    image: prmurali91/teamcodering_satellite
     command: npm start
     links:
       - redis

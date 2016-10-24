@@ -90,4 +90,16 @@ set :puma_workers, 0
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 set :puma_preload_app, false
-server 'ubuntu@ec2-52-32-57-118.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{web app db}
+server 'ubuntu@ec2-52-32-57-118.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}
+
+namespace :custom do
+  task :setup_container do
+    on roles(:docker) do |host|
+      puts "================Starting Docker setup===================="
+      execute "docker-compose down"
+      execute "docker-compose up --build"
+    end
+  end
+end
+
+after "deploy:finishing", "custom:setup_container"
