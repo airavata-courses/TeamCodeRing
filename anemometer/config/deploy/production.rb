@@ -69,7 +69,7 @@ set :deploy_to, '/home/deploy/CodeRing'
 set :keep_releases, 1
 set :ssh_options, keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")
 set :use_sudo, true
-server 'ubuntu@ec2-52-32-57-118.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}
+server 'ubuntu@ec2-35-161-229-183.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}
 
 namespace :custom do
   task :setup_container do
