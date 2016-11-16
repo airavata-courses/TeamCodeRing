@@ -83,4 +83,4 @@ namespace :custom do
 end
 
 after "deploy:updating", "custom:setup_container"
-after "deploy:restart", "deploy:cleanup"
+after "deploy:finishing", "deploy:cleanup"

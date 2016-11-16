@@ -42,7 +42,14 @@ services:
       - db
       - redis
     ports:
-      - '80:3000'
+      - '3000:3000'
+
+  nginx:
+    build: ./nginx
+    links:
+        - anemometer:anemometer
+    ports:
+        - "80:80"
 
   satellite:
     build: ./satellite
