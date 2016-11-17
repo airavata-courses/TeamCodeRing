@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  db:
+    image: "library/mysql:5.6"
+    volumes:
+       - "./.data/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: weather_machine
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+
+  redis:
+    image: 'redis:3.0-alpine'
+    command: redis-server
+    volumes:
+      - 'redis:/var/lib/redis/data'
+    ports:
+      - '6379:6379'
+
+  anemometer:
+    depends_on:
+       - db
+    build: .
+    image: prmurali91/teamcodering_anemometer
+    command: bash -c "bundle exec rake db:migrate && rails server -b 0.0.0.0"
+    volumes:
+      - '.:/anemometer'
+    links:
+      - db
+      - redis
+    ports:
+      - '3000:3000'
+
+  nginx:
+    build: ./nginx
+    links:
+        - anemometer:anemometer
+    ports:
+        - "80:80"
+
+volumes:
+  redis:

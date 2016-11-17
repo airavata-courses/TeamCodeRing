@@ -5,6 +5,7 @@ FROM ruby:2.3
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+ARG APP_DB_HOST
 
 EXPOSE 3000
 

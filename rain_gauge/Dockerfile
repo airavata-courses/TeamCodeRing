@@ -9,3 +9,4 @@ RUN pip install -r requirements.txt
 RUN pip install uwsgi
 ENV FLASK_APP=application.py
 EXPOSE 5000
+ENTRYPOINT ["uwsgi", "--http", "0.0.0.0:5000", "--module", "application:app", "--processes", "1", "--threads", "8"]
