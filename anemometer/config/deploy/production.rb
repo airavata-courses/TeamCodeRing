@@ -75,7 +75,8 @@ namespace :custom do
   task :setup_container do
     on roles(:docker) do |host|
       puts "================Starting Docker setup===================="
-      execute "cd #{release_path} && docker-compose down"
+      execute "docker stop $(docker ps -a -q)"
+      execute "docker rm $(docker ps -a -q)"
       execute "cd #{release_path} && docker-compose up -d --build"
       exit
     end
