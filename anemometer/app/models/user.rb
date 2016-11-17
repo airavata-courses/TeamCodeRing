@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
+  
+  attr_accessor :email, :name, :password, :password_confirmation
+
   acts_as_authentic do |c|
-    #c.crypto_provider = Authlogic::CryptoProviders::Sha512
+    c.crypto_provider = Authlogic::CryptoProviders::Sha512
     c.validate_email_field = false
     c.validate_password_field = false
   end
