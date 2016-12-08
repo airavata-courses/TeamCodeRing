@@ -13,15 +13,12 @@ router.get('/', function(req, res, next) {
       tab += "<tr><td>"+reply[i]+"</td>";
       client.smembers(reply[i], function(err, response) {
         for(var j = 0;j<response.length;j++) {
-          console.log("inside second loop");
-          console.log(response);
           tab += "<td>"+response[j]+"</td>";
         }
       });
       tab += "</tr>";
     }
     tab += "</table>";
-    console.log(tab);
     setTimeout(function() {res.render('index.ejs', {tab})}, 500);
   });
 });

@@ -9,7 +9,7 @@ import os
 
 app = Flask(__name__)
 
-redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis_url = os.getenv('REDISTOGO_URL', 'redis://redis:6379')
 conn = redis.from_url(redis_url)
 
 @app.route('/')

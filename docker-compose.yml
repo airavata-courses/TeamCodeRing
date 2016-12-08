@@ -41,6 +41,7 @@ services:
     links:
       - db
       - redis
+      - rain_gauge
     ports:
       - '3000:3000'
 
@@ -48,8 +49,12 @@ services:
     build: ./nginx
     links:
         - anemometer:anemometer
+        - rain_gauge:rain_gauge
+        - satellite:satellite
     ports:
         - "80:80"
+        - "4550:4500"
+        - "5050:5000"
 
   satellite:
     build: ./satellite
