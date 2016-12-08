@@ -3,8 +3,8 @@
 </div>
 
 <ul>
-<% JSON.parse(@data_results.body).each do |url| %>
-<li><%= url %></li>
-<% end %>
+  <% JSON.parse(@data_results.body).each do |url| %>
+  <li><%= url %></li>
+  <% end %>
 </ul>
 <%= link_to "Back", root_path, class: 'btn btn-primary btn-lg' %>

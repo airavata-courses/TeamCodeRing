@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   resources :user_sessions, only: [:create, :destroy]
 
   post '/data_source', to: 'pages#form_url', as: :data_source
+  post '/view_submissions', to: 'jobs#index', as: :view_submissions
+  #post '/modify_submissions', to: 'jobs#submittedvalues', as: :modify_submissions
+  post '/modify_submissions', to: 'pages#index', as: :modify_submissions
    
    
 

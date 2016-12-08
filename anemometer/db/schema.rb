@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161013041932) do
+ActiveRecord::Schema.define(version: 20161204041347) do
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer  "userid",         limit: 4
+    t.string   "station",        limit: 255
+    t.datetime "submissiontime"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",              limit: 255

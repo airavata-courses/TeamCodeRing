@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
     c.validate_email_field = false
     c.validate_password_field = false
   end
+  attr_accessor :password_confirmation
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
