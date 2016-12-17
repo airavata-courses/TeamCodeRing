@@ -63,7 +63,7 @@
 lock '3.6.1'
 
 set :application, 'weather'
-set :repo_url, 'git@github.com:airavata-courses/TeamCodeRing.git' # Edit this to match your repository
+set :repo_url, 'https://github.com/airavata-courses/TeamCodeRing.git' # Edit this to match your repository
 set :branch, :Dockerization
 set :deploy_to, '/home/deploy/CodeRing'
 set :keep_releases, 1
