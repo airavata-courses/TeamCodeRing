@@ -20,6 +20,8 @@ services:
       - '6379:6379'
 
   rain_gauge:
+    depends_on:
+      - redis
     build: ./rain_gauge
     image: prmurali91/teamcodering_rain_gauge
     command: uwsgi --http 0.0.0.0:5000 --module application:app --processes 1 --threads 8
@@ -33,6 +35,8 @@ services:
   anemometer:
     depends_on:
        - db
+       - redis
+       - rain_gauge
     build: ./anemometer
     image: prmurali91/teamcodering_anemometer
     command: bash -c "bundle exec rake db:migrate && rails server -b 0.0.0.0"
@@ -45,18 +49,9 @@ services:
     ports:
       - '3000:3000'
 
-  nginx:
-    build: ./nginx
-    links:
-        - anemometer:anemometer
-        - rain_gauge:rain_gauge
-        - satellite:satellite
-    ports:
-        - "80:80"
-        - "4550:4500"
-        - "5050:5000"
-
   satellite:
+    depends_on:
+      - redis
     build: ./satellite
     image: prmurali91/teamcodering_satellite
     command: npm start
@@ -67,7 +62,22 @@ services:
     ports:
       - '4500:4500'
 
+  nginx:
+    depends_on:
+      - anemometer
+      - rain_gauge
+      - satellite
+    build: ./nginx
+    links:
+        - anemometer:anemometer
+        - rain_gauge:rain_gauge
+        - satellite:satellite
+    ports:
+        - "80:80"
+
   master:
+    depends_on:
+      - nginx
     image: gettyimages/spark
     command: bin/spark-class org.apache.spark.deploy.master.Master -h master
     hostname: master
@@ -94,6 +104,8 @@ services:
       - ./spark_data:/tmp/data
 
   worker:
+    depends_on:
+      - master
     image: gettyimages/spark
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
     hostname: worker

@@ -67,9 +67,11 @@ set :repo_url, 'git@github.com:airavata-courses/TeamCodeRing.git' # Edit this to
 set :branch, :Dockerization
 set :deploy_to, '/home/deploy/CodeRing'
 set :keep_releases, 1
-set :ssh_options, keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")
+set :ssh_options, forward_agent: true, keys: ["config/deploy_id_rsa"] if File.exist?("config/deploy_id_rsa")
 set :use_sudo, true
-server 'ubuntu@ec2-35-161-229-183.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}
+role :docker, %w{ec2-52-15-149-191.us-east-2.compute.amazonaws.com ec2-35-161-229-183.us-west-2.compute.amazonaws.com}, user: 'deploy'
+# server 'ubuntu@ec2-35-161-229-183.us-west-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}, :primary => true
+# server 'ubuntu@ec2-52-15-149-191.us-east-2.compute.amazonaws.com', user: 'deploy', roles: %w{docker}
 
 namespace :custom do
   task :setup_container do
