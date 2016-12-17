@@ -35,6 +35,7 @@ before_script:
   - bundle install
 script:
   - bundle exec cap production deploy
+  - bundle exec cap production2 deploy
 branches:
   only:
   - master
