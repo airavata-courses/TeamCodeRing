@@ -15,7 +15,6 @@ class PagesController < ApplicationController
       @temp = @temp.to_time
       puts @temp
       # @submittedtime = @temp.strftime('%m/%d/%Y %H:%M %p') 
-      puts  local_time(@temp) 
       # puts   @submittedtime.Time.zone_offset('EST') 
     end
   end
