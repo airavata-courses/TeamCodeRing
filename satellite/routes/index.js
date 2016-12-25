@@ -8,21 +8,25 @@ var app = express();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   client.smembers('weather_machine', function(err, reply) {
-    var tab = "<table>";
+    var tab = "<div>";
     for(var i = 0;i<reply.length;i++) {
-      tab += "<tr><td>"+reply[i]+"</td>";
+      var key = reply[i];
+      var count = 1;
       client.smembers(reply[i], function(err, response) {
+        tab+="<div>Job Number: "+count+"</div>";
+        count++;
+        tab += "<div><div>"+key+"</div>";
         for(var j = 0;j<response.length;j++) {
-          console.log("inside second loop");
-          console.log(response);
-          tab += "<td>"+response[j]+"</td>";
+
+          tab += "<div>"+response[j]+"</div>";
         }
+         tab += "</div> <br>";
       });
-      tab += "</tr>";
+     
     }
-    tab += "</table>";
+    tab += "</div> ";
     console.log(tab);
-    setTimeout(function() {res.render('index.ejs', {tab})}, 500);
+    setTimeout(function() {res.render('index.ejs', {tab})}, 1000);
   });
 });
 

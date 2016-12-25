@@ -1,7 +1,7 @@
 require 'net/http'
 require 'json'
 require 'redis'
-require 'local_time'
+
 class PagesController < ApplicationController
 
   before_filter :require_current_user
@@ -10,12 +10,14 @@ class PagesController < ApplicationController
     @station_list = YAML.load(File.read("config/station.yml"))
     @submittedstation = params[:station]
     @temp = params[:submissiontime]
+    @rediskey = params[:rediskey]
+    @redisvalue = $redis.smembers(@rediskey)
 
     unless @temp.nil? || @temp == 0
       @temp = @temp.to_time
       puts @temp
       # @submittedtime = @temp.strftime('%m/%d/%Y %H:%M %p') 
-      puts  local_time(@temp) 
+      #puts  local_time(@temp) 
       # puts   @submittedtime.Time.zone_offset('EST') 
     end
   end
@@ -24,11 +26,11 @@ class PagesController < ApplicationController
     @current_request_key = "request:"+current_user.id.to_s+":"+Time.new.utc.to_s
     add_redis_keys
     add_job_details
-    puts "here!!"
+
     user_id = current_user.id
     station = params[:stations]
     submissiondatetime = params[:start][:date]
-    sql = "INSERT INTO jobs(userid , station, submissiontime) VALUES ('#{user_id}', '#{station}', STR_TO_DATE('#{submissiondatetime}', '%m/%d/%Y %l:%i %p'))  "
+    sql = "INSERT INTO jobs(userid , station, submissiontime, rediskey) VALUES ('#{user_id}', '#{station}', STR_TO_DATE('#{submissiondatetime}', '%m/%d/%Y %l:%i %p'), '#{@current_request_key}')  "
     ActiveRecord::Base.connection.execute sql 
     @data_results = call_data_ingestor
     if @data_results.is_a?(Net::HTTPSuccess)

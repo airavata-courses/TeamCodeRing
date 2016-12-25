@@ -10,11 +10,18 @@
     <label class="col-xs-2" for="time">TIME & DATE</label>
     <div class="col-xs-10">
       <input class="datetimepicker" type="text" name="start[date]" id="start_date" data-prev= '<%= @submittedtime %>' >
-     
     </div>
   </div>
   <%= submit_tag("Submit") %>
 <% end %>
+
+<% if @redisvalue.present? %>
+  <div class="alert alert-success">
+    <p> Job Status </p>
+    <a href="#" class="alert-link"><%= @redisvalue %></a>
+  </div>
+<% end %>
+
 <h2>  Submitted Requests </h2>
 <%= form_tag(view_submissions_path, method: "post") do %>
 <%= submit_tag("View") %>
