@@ -1,7 +1,7 @@
 require 'net/http'
 require 'json'
 require 'redis'
-require 'local_time'
+
 class PagesController < ApplicationController
 
   before_filter :require_current_user
@@ -23,12 +23,13 @@ class PagesController < ApplicationController
     @current_request_key = "request:"+current_user.id.to_s+":"+Time.new.utc.to_s
     add_redis_keys
     add_job_details
-    puts "here!!"
-    user_id = current_user.id
-    station = params[:stations]
     submissiondatetime = params[:start][:date]
-    sql = "INSERT INTO jobs(userid , station, submissiontime) VALUES ('#{user_id}', '#{station}', STR_TO_DATE('#{submissiondatetime}', '%m/%d/%Y %l:%i %p'))  "
-    ActiveRecord::Base.connection.execute sql 
+    puts submissiondatetime
+    puts params[:stations]
+    puts current_user.id
+    puts @current_request_key
+    j = Job.new({userid: current_user.id, station: params[:stations], submissiontime: Date.strptime(submissiondatetime, '%m/%d/%Y %I:%M %p').to_time, rediskey: @current_request_key})
+    j.save
     @data_results = call_data_ingestor
     if @data_results.is_a?(Net::HTTPSuccess)
       flash[:success] = "Data ingested successfully!!"
