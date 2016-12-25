@@ -27,7 +27,7 @@ def data_ingest():
     urls = ["http://noaa-nexrad-level2.s3.amazonaws.com/"+key.name for key in s3_bucket.get_all_keys(prefix=timestamp)]
     conn.sadd(redis_key, "Data URLs Generated, JSON prepared to send Gateway")
     conn.sadd(redis_key, "Data sent to Storm clustering in mesos")
-    print os.popen('/usr/spark-2.0.2/bin/spark-submit --class src.main.scala.com.sga.stormclustering.StormClustering --master mesos://54.215.213.130 /app/sparkstormclustering-0.0.1-SNAPSHOT.jar '+urls[0]).read()
+    print os.popen('/usr/spark-2.0.2/bin/spark-submit --class src.main.scala.com.sga.sparkwordcount.SparkWordCount --master mesos://54.215.213.130 /app/sparkstormclustering-0.0.1-SNAPSHOT.jar '+urls[0]).read()
     conn.sadd(redis_key, "Storm clustering over in mesos")
     return json.dumps(urls)
 

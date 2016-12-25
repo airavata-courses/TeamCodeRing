@@ -75,7 +75,15 @@ RUN curl -sL --retry 3 \
  && mv /usr/$SPARK_PACKAGE $SPARK_HOME \
  && chown -R root:root $SPARK_HOME
 
+RUN curl -s -O  https://s3.amazonaws.com/bigdata-thirdparty/mesos_cluster/mesos_0.22.1/mesos-0.22.1.deb && \
+    dpkg --unpack mesos-0.22.1.deb && \
+    apt-get install -f -y && \
+    rm mesos-0.22.1.deb && \
+    apt-get clean
+
+ENV MESOS_NATIVE_LIBRARY /usr/lib/libmesos.so
+ENV MESOS_NATIVE_JAVA_LIBRARY /usr/lib/libmesos.so
+
 WORKDIR /app
-RUN uwsgi --http 0.0.0.0:5000 --module application:app --processes 1 --threads 8 &
 
 EXPOSE 5000

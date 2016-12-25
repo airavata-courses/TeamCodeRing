@@ -10,7 +10,8 @@ class PagesController < ApplicationController
     @station_list = YAML.load(File.read("config/station.yml"))
     @submittedstation = params[:station]
     @temp = params[:submissiontime]
-
+    @rediskey = params[:rediskey]
+    @redisvalue = $redis.smembers(@rediskey)
     unless @temp.nil? || @temp == 0
       @temp = @temp.to_time
       puts @temp
